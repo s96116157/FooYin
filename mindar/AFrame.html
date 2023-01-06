@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="./js/aframe.min.js"></script>
+    <script>
+        AFRAME.registerComponent('school-playground', {
+            init: function () {
+                // Solution for Handling Events.
+                var sceneEl = document.querySelector('a-scene');
+                var boxEl = sceneEl.querySelector('#redBox')
+                var text = document.querySelector("#LogText");
+
+                boxEl.addEventListener('mouseenter', function (evt) {
+                    //console.log(evt.detail.intersection.point);
+                    _color('blue');
+                });
+
+                boxEl.addEventListener('mouseleave', function () {
+                    //console.log(evt.detail.intersection.point);
+                    _color('red');
+                });
+
+                const _color = (x) => {
+                    //console.log(x);
+                    boxEl.setAttribute('color', x);
+                }
+
+                navigator.mediaDevices.enumerateDevices()
+                    .then((devices) => {
+                        var txt = '';
+                        devices.forEach((device) => {
+                            txt += `${device.kind}: ${device.label}\n`;
+                            console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
+
+                        });
+
+                        text.setAttribute("value", txt);
+                    })
+
+
+                //boxEl.emit('foo');
+            }
+        });
+
+    </script>
+    <meta charset="UTF-8" />
+</head>
+
+<body>
+
+    <div class="example-container">
+        <a-scene school-playground>
+            <a-assets>
+                <img id="textura_pelota"
+                    src="https://images.pexels.com/photos/6157052/pexels-photo-6157052.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                    crossorigin="anonymous" />
+                <!-- <a-asset-item id="head" src="./assets/gltf/adamHead.gltf"></a-asset-item> -->
+            </a-assets>
+
+            <a-camera position="0 1.5 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
+                raycaster="far: 10000; objects: .clickable">
+            </a-camera>
+
+            <a-entity>
+                <a-sky color="#999"></a-sky>
+                <a-dodecahedron position="3 1 -5" color="#FF926B" radius="1"></a-dodecahedron>
+                <a-entity rotation="0 0 0">
+                    <a-box id="redBox" position="0.5 0.5 -3" class="clickable" color="red"></a-box>
+                    <a-box position="-1 0.5 -3" rotation="0 45 0" src="#textura_pelota" geometry="primitive: box"
+                        material="color: #FFF" class="clickable"
+                        animation="property: position; to: -1 1 -3; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">
+                    </a-box>
+                    <a-sphere position=" -2 1.5 -5" radius="1.25" rotation="0 -45 0" color="#EF2D5E"
+                        src="#textura_pelota" geometry="primitive: sphere" material="color: #FFF">
+                        <a-ring position="0 2 0" color="#4CC3D9"></a-ring>
+                    </a-sphere>
+                    <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+
+                    <a-text id="LogText" value="Portfolio" color="white" align="left" width="3"
+                        position="-1 3 -3"></a-text>
+                    <!-- <a-entity id="LogText" text="value: Hello World;" scale="5 5 1" position="2 3 -3"></a-entity> -->
+                </a-entity>
+                <a-plane position="0 0 -5" rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
+                <!-- <a-gltf-model position="0 1 -3" rotation="0 180 0" scale="0.75 0.75 0.75" src="#head"></a-gltf-model> -->
+            </a-entity>
+        </a-scene>
+    </div>
+</body>
+
+</html>
