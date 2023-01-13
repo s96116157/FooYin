@@ -4,26 +4,32 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <script src="./js/aframe.min.js"></script>
   <script src="./js/mindar-image-aframe.prod.js"></script>
+  <script src="./js/aframe.min.js"></script>
+  <script src="./js/aframe.js"></script>
+  <script src="./js/API.js"></script>
   <link rel="stylesheet" href="./css/mindar.css">
 </head>
 
 <body>
   <div class="example-container">
-    <a-scene mindar-image="imageTargetSrc: ./assets/mind/MultiTracks.mind; showStats: false;" embedded color-space="sRGB"
-      renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
-      device-orientation-permission-ui="enabled: false">
+    <a-scene ar_scene
+      mindar-image="imageTargetSrc: ./assets/mind/card.mind; filterMinCF: 0.001; filterBeta: 0.001; warmupTolerance: 1; missTolerance: 30;"
+      embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false">
+      <a-assets>
 
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
+        raycaster="far: 10000; objects: .clickable"></a-camera>
 
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-sphere position=" 0 0 0" radius="0.5" rotation="0 0 0" color="blue">
+        <a-sphere id="UI_000" position=" 0 0 0" radius="0.5" rotation="0 0 0" color="blue" class="clickable">
         </a-sphere>
       </a-entity>
 
       <a-entity mindar-image-target="targetIndex: 1">
-        <a-sphere position=" 0 0 0" radius="0.5" rotation="0 0 0" color="red">
+        <a-sphere id="UI_001" position=" 0 0 0" radius="0.5" rotation="0 0 0" color="red" class="clickable">
         </a-sphere>
       </a-entity>
     </a-scene>
